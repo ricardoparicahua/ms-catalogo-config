@@ -1,0 +1,25 @@
+server:
+  port: 7070
+
+spring:
+  application:
+    name: config-server
+  profiles:
+    active: composite
+  security:
+    user:
+      name: root
+      password: 123456
+  cloud:
+    config:
+      server:
+        composite:
+          # Repositorio GitHub propio: fuente principal de configuracion.
+          - type: git
+            uri: ${CONFIG_GIT_URI:https://github.com/ricardoparicahua/ms-catalogo-config.git}
+            search-paths: config-data
+            default-label: main
+          # Espejo local de respaldo (mismos valores 5432 / 123456).
+          - type: git
+            uri: ${CONFIG_LOCAL_REPO_URI:file:///D:/TRABAJOS%20UNAJ%20VI/DINAMICA%20DE%20SISTEMAS/UNIDAD%20II/priyecto1/config-data}
+            default-label: main
